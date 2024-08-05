@@ -6,8 +6,13 @@ import { User } from 'src/models/user.entity';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Get()
+  /* @Get()
   async getAll(): Promise<User[]> {
+    return await this.userService.findAll();
+  } */
+
+  @Get()
+  async getAll() {
     return await this.userService.findAll();
   }
 
