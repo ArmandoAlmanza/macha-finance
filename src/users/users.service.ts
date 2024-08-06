@@ -73,12 +73,15 @@ export class UsersService {
     throw new HttpException('There is a problem', HttpStatus.BAD_REQUEST);
   }
 
-  async delete(email: string): Promise<HttpStatus | null> {
+  async delete(email: string): Promise<Object> {
     const user = await this.userRepository.findOneBy({ email: email });
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
     this.userRepository.delete(user);
-    return HttpStatus.ACCEPTED;
+    return {
+      message: 'User Deleted succesfully',
+      status: HttpStatus.OK,
+    };
   }
 }
