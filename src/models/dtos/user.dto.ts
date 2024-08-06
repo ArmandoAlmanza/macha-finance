@@ -5,3 +5,10 @@ export class UserProfileDTO {
   phone: string;
   gender: string;
 }
+
+export class UserDTO {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password?: string;
+}

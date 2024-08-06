@@ -1,6 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from 'src/models/user.entity';
+import { UserDTO } from 'src/models/dtos/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -16,8 +16,22 @@ export class UsersController {
     return await this.userService.findAll();
   }
 
+  @Post()
+  async register(@Body() userDto: UserDTO) {
+    return await this.userService.register(userDto);
+  }
+
   @Get(':email')
   async getByEmail(@Param('email') email: string) {
     return await this.userService.findByEmail(email);
   }
+  @Get(':email')
+  async delete(@Param('email') email: string) {
+    return await this.userService.findByEmail(email);
+  }
+  @Put(':email')
+  async update(@Param('email') email: string, @Body() userDto: UserDTO) {
+    return await this.userService.update(email, userDto);
+  }
+
 }
