@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { Profile } from 'src/models/profile.entity';
 import { ProfileService } from './profile.service';
+import { ProfileDTO } from 'src/models/dtos/profile.dto';
 
 @Controller('profile')
 export class ProfileController {
@@ -9,8 +10,15 @@ export class ProfileController {
   async getAll(): Promise<Profile[]> {
     return await this.profileService.findAll();
   }
-}
 
+  @Put(':email')
+  async update(
+    @Param('email') email: string,
+    @Body() profileDTo: ProfileDTO,
+  ): Promise<Profile> {
+    return await this.profileService.update(email, profileDTo);
+  }
+}
 
 /* 
 async findAll(): Promise<UserProfileDTO[]> {
