@@ -31,9 +31,8 @@ export class UsersService {
 
   async findByEmail(email: string): Promise<User | null> {
     const user = await this.userRepository.findOneBy({ email: email });
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
     return user;
   }
 
@@ -57,9 +56,7 @@ export class UsersService {
 
   async update(email: string, currentUser: UserDTO): Promise<User | null> {
     const user = await this.userRepository.findOneBy({ email: email });
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
     user.firstName = currentUser.firstName;
     user.lastName = currentUser.lastName;
@@ -75,9 +72,8 @@ export class UsersService {
 
   async delete(email: string): Promise<Object> {
     const user = await this.userRepository.findOneBy({ email: email });
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
     this.userRepository.delete(user);
     return {
       message: 'User Deleted succesfully',
