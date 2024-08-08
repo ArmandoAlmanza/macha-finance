@@ -38,6 +38,11 @@ export class UsersService {
 
   async register(userDto: UserDTO): Promise<User | null> {
     const user = new User();
+    const tempUser = this.userRepository.findOneBy({ email: userDto.email });
+
+    if (tempUser)
+      throw new HttpException('User Duplicated', HttpStatus.BAD_REQUEST);
+    
     const salt = bcrypt.genSaltSync(10);
 
     user.id = uuidv4();
