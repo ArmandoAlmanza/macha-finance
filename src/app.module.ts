@@ -9,7 +9,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { Profile } from './models/profile.entity';
 import { ProfileModule } from './profile/profile.module';
-
+import { LoggerModule } from 'nestjs-pino';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,6 +31,18 @@ import { ProfileModule } from './profile/profile.module';
         entities: [User, Profile],
         logging: false,
       }),
+    }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            singleLine: true,
+            messageKey: 'message',
+          },
+        },
+        messageKey: 'message',
+      },
     }),
     UsersModule,
     AuthModule,
