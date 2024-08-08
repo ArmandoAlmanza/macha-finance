@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { Profile } from './models/profile.entity';
 import { ProfileModule } from './profile/profile.module';
 import { LoggerModule } from 'nestjs-pino';
+import { Transaction } from './models/transaction.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,7 +29,7 @@ import { LoggerModule } from 'nestjs-pino';
         password: configService.get('database.password'),
         database: configService.get('database.database'),
         synchronize: false,
-        entities: [User, Profile],
+        entities: [User, Profile, Transaction],
         logging: false,
       }),
     }),
