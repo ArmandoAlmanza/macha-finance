@@ -12,3 +12,8 @@ export class UserDTO {
   email: string;
   password?: string;
 }
+
+export class UserLogin {
+  email: string;
+  password: string;
+}

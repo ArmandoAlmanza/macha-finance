@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserDTO } from 'src/models/dtos/user.dto';
+import { UserDTO, UserLogin } from 'src/models/dtos/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -33,7 +33,7 @@ export class UsersController {
   async getByEmail(@Param('email') email: string) {
     return await this.userService.findByEmail(email);
   }
-  
+
   @Delete(':email')
   async delete(@Param('email') email: string) {
     return await this.userService.delete(email);
@@ -42,5 +42,9 @@ export class UsersController {
   @Put(':email')
   async update(@Param('email') email: string, @Body() userDto: UserDTO) {
     return await this.userService.update(email, userDto);
+  }
+  @Post(':email')
+  async login(@Body() user: UserLogin, @Param('email') email: string) {
+    return await this.userService.login(user, email);
   }
 }
