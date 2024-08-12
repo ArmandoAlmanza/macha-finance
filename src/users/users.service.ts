@@ -80,7 +80,7 @@ export class UsersService {
     if (!email_eq || !pass_eq)
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
 
-    return { message: 'Welcome', status: HttpStatus.OK };
+    return HttpStatus.OK;
   }
 
   async update(email: string, currentUser: UserDTO): Promise<User | null> {
@@ -104,9 +104,6 @@ export class UsersService {
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
     this.userRepository.delete(user);
-    return {
-      message: 'User Deleted succesfully',
-      status: HttpStatus.OK,
-    };
+    return HttpStatus.OK; 
   }
 }

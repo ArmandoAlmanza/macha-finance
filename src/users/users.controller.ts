@@ -3,12 +3,15 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   Put,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDTO, UserLogin } from 'src/models/dtos/user.dto';
+import { Response } from 'express';
 
 @Controller('users')
 export class UsersController {
@@ -35,8 +38,18 @@ export class UsersController {
   }
 
   @Delete(':email')
-  async delete(@Param('email') email: string) {
-    return await this.userService.delete(email);
+  async delete(@Param('email') email: string, @Res() res: Response) {
+    const response = await this.userService.delete(email);
+    if (response != 200) {
+      res.status(HttpStatus.UNAUTHORIZED).json({
+        status: 'Unauthorized',
+        message: 'Invalid Credentials',
+      });
+    }
+    res.status(HttpStatus.OK).json({
+      status: 'ok',
+      message: 'Logged',
+    });
   }
 
   @Put(':email')
@@ -44,7 +57,22 @@ export class UsersController {
     return await this.userService.update(email, userDto);
   }
   @Post(':email')
-  async login(@Body() user: UserLogin, @Param('email') email: string) {
-    return await this.userService.login(user, email);
+  async login(
+    @Body() user: UserLogin,
+    @Param('email') email: string,
+    @Res() res: Response,
+  ) {
+    const response = await this.userService.login(user, email);
+    if (response != 200) {
+      res.status(HttpStatus.UNAUTHORIZED).json({
+        status: 'Unauthorized',
+        message: 'Invalid Credentials',
+      });
+    }
+    res.status(HttpStatus.OK).json({
+      status: 'ok',
+      message: 'Logged',
+    });
+    return user;
   }
 }
