@@ -27,10 +27,7 @@ export class UsersController {
     return await this.userService.findAll();
   }
 
-  @Post()
-  async register(@Body() userDto: UserDTO) {
-    return await this.userService.register(userDto);
-  }
+ 
 
   @Get(':email')
   async getByEmail(@Param('email') email: string) {
@@ -56,23 +53,5 @@ export class UsersController {
   async update(@Param('email') email: string, @Body() userDto: UserDTO) {
     return await this.userService.update(email, userDto);
   }
-  @Post(':email')
-  async login(
-    @Body() user: UserLogin,
-    @Param('email') email: string,
-    @Res() res: Response,
-  ) {
-    const response = await this.userService.login(user, email);
-    if (response != 200) {
-      res.status(HttpStatus.UNAUTHORIZED).json({
-        status: 'Unauthorized',
-        message: 'Invalid Credentials',
-      });
-    }
-    res.status(HttpStatus.OK).json({
-      status: 'ok',
-      message: 'Logged',
-    });
-    return user;
-  }
+  
 }
